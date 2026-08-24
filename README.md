@@ -8,24 +8,51 @@ Codeforces, LeetCode, CSES, CodeChef &amp; GeeksforGeeks solutions, organized cl
 
 Synced automatically by SolveBase.
 
-**Total solved: 2**
+**Total solved: 3**
 
+## Codeforces
+
+Solutions by [Codeforces](https://codeforces.com/profile/), organized by difficulty rating.
+
+**Solved: 0**
+
+| Difficulty | Solved |
+| --- | --- |
+| — | 0 |
 
 
 ## LeetCode
 
 Solutions organized by primary topic folder.
 
-**Solved: 1**
+**Solved: 2**
 
 | Topic | Solved |
 | --- | --- |
+| [dynamic-programming](./leetcode/dynamic-programming) | 1 |
 | [string](./leetcode/string) | 1 |
 
 
+## CSES
+
+Solutions from the CSES Problem Set, organized by section.
+
+**Solved: 0**
+
+| Section | Solved |
+| --- | --- |
+| — | 0 |
 
 
+## CodeChef
 
+Solutions organized by difficulty rating.
+
+**Solved: 0**
+
+| Difficulty | Solved |
+| --- | --- |
+| — | 0 |
 
 
 ## GeeksforGeeks
@@ -39,5 +66,5 @@ Solutions organized by difficulty level.
 | [Easy](./geeksforgeeks/Easy) | 1 |
 
 
-_Last updated: 2026-08-23_
+_Last updated: 2026-08-24_
 <!-- /cf-sync -->
