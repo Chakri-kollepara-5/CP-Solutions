@@ -1,34 +1,48 @@
 class Solution {
-	public:
-	int solve(int row, int col, vector<vector<int>> & dp,
-	const int& n,
-	const vector<vector<int>> & mat) {
-		if (row >= n || col >= 3)
-			return INT_MAX;
+  public:
 
-		if (row == n - 1)
-			return mat[row][col];
+    int dr[8]={0, 1, 1, 1, 0, -1, -1, -1};
+    int dc[8]={1, 1, 0, -1, -1, -1, 0, 1};
+    int n, m, len;
 
-		if (dp[row][col] != INT_MAX)
-			return dp[row][col];
+    bool dfs(int r, int c, int i, int x, 
+    vector<vector<char>> &mat, string &word){
 
-		int ans = INT_MAX;
-		for (int c = 0; c<3; c++) {
-			if (c == col)
-				continue;
-			ans = min(ans, solve(row + 1, c, dp, n, mat));
-		}
+        if(x>=len) return true;
 
-		return dp[row][col] = mat[row][col] + ans;
-	}
-	int minCost(vector<vector<int>> & mat) {
-		// code here
-		int n = mat.size();
-		vector<vector<int>> dp(n, vector<int>(3, INT_MAX));
-		int ans = INT_MAX;
-		for (int i = 0; i<3; i++) {
-			ans = min(ans, solve(0, i, dp, n, mat));
-		}
-		return ans;
-	}
+        if(r<0 || r>=n || c<0 || c>=m || mat[r][c]!=word[x]){
+            return false;
+        }
+
+        int nr=r+dr[i];
+        int nc=c+dc[i];
+
+        return dfs(nr, nc, i, x+1, mat, word);
+    }
+
+    vector<vector<int>> searchWord(vector<vector<char>> &mat, string &word) {
+        // Code here
+        n=mat.size();
+        m=mat[0].size();
+        len=word.length();
+
+        char st=word[0];
+
+        vector<vector<int>>ans;
+
+        for(int r=0; r<n; r++){
+            for(int c=0; c<m; c++){
+                if(mat[r][c]==st){
+                    for(int i=0; i<8; i++){
+                        if(dfs(r, c, i, 0, mat, word)){
+                            ans.push_back({r, c});
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
 };
