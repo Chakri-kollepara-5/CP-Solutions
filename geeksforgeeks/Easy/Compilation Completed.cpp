@@ -1,48 +1,21 @@
-class Solution {
-  public:
+class Solution:
+    def pairCount(self, x, y):
+        if y % x != 0:
+            return 0
 
-    int dr[8]={0, 1, 1, 1, 0, -1, -1, -1};
-    int dc[8]={1, 1, 0, -1, -1, -1, 0, 1};
-    int n, m, len;
+        n = y // x
+        count = 0
 
-    bool dfs(int r, int c, int i, int x, 
-    vector<vector<char>> &mat, string &word){
+        for a in range(1, n + 1):
+            if n % a == 0:
+                b = n // a
 
-        if(x>=len) return true;
+                if self.gcd(a, b) == 1:
+                    count += 1
 
-        if(r<0 || r>=n || c<0 || c>=m || mat[r][c]!=word[x]){
-            return false;
-        }
+        return count
 
-        int nr=r+dr[i];
-        int nc=c+dc[i];
-
-        return dfs(nr, nc, i, x+1, mat, word);
-    }
-
-    vector<vector<int>> searchWord(vector<vector<char>> &mat, string &word) {
-        // Code here
-        n=mat.size();
-        m=mat[0].size();
-        len=word.length();
-
-        char st=word[0];
-
-        vector<vector<int>>ans;
-
-        for(int r=0; r<n; r++){
-            for(int c=0; c<m; c++){
-                if(mat[r][c]==st){
-                    for(int i=0; i<8; i++){
-                        if(dfs(r, c, i, 0, mat, word)){
-                            ans.push_back({r, c});
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return ans;
-    }
-};
+    def gcd(self, a, b):
+        while b != 0:
+            a, b = b, a % b
+        return a
