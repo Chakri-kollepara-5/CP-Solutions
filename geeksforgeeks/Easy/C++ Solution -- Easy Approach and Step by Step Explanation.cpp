@@ -1,42 +1,51 @@
-class Solution {
-    public:
-      long long power(long long base, long long exp, long long mod) {
-          long long result = 1;
-
-          while (exp > 0) {
-              if (exp & 1) {
-                  result = (result * base) % mod;
-              }
-
-              base = (base * base) % mod;
-              exp >>= 1;
-          }
-
-          return result;
-      }
-
-      int prefixStrings(int n) {
-          const long long MOD = 1000000007LL;
-          long long factN = 1;
-          long long fact2N = 1;
-
-          for (int i = 1; i <= 2 * n; i++) {
-              fact2N = (fact2N * i) % MOD;
-
-              if (i <= n) {
-                  factN = (factN * i) % MOD;
-              }
-          }
-
-          long long inverseFactN = power(factN, MOD - 2, MOD);
-
-          long long inverseNPlusOne = power(n + 1, MOD - 2, MOD);
-
-          long long answer = fact2N;
-          answer = (answer * inverseFactN) % MOD;
-          answer = (answer * inverseFactN) % MOD;
-          answer = (answer * inverseNPlusOne) % MOD;
-
-          return (int)answer;
-      }
-  };
+class Solution:
+    def longestPath(self, s, edges):
+        n = len(s)
+        g = [[] for _ in range(n)]
+        for u, v in edges:
+            u -= 1
+            v -= 1
+            g[u].append(v)
+            g[v].append(u)
+        par = [-1] * n
+        order = [0]
+        for u in order:
+            for v in g[u]:
+                if v != par[u]:
+                    par[v] = u
+                    order.append(v)
+        down = [1] * n
+        ans = 1
+        for u in order[::-1]:
+            a = b = 0
+            for v in g[u]:
+                if par[v] == u and s[v] == s[u]:
+                    x = down[v]
+                    if x > a:
+                        b, a = a, x
+                    elif x > b:
+                        b = x
+            down[u] = a + 1
+            ans = max(ans, a + b + 1)
+        up = [1] * n
+        for u in order:
+            a = b = 0
+            who = -1
+            for v in g[u]:
+                if par[v] == u and s[v] == s[u]:
+                    x = down[v]
+                    if x > a:
+                        b, a, who = a, x, v
+                    elif x > b:
+                        b = x
+            for v in g[u]:
+                if par[v] == u and s[v] == s[u]:
+                    other = b if v == who else a
+                    up[v] = 1 + max(up[u], other + 1)
+        arm = [max(down[i], up[i]) for i in range(n)]
+        for u, v in edges:
+            u -= 1
+            v -= 1
+            if s[u] != s[v]:
+                ans = max(ans, arm[u] + arm[v])
+        return ans
